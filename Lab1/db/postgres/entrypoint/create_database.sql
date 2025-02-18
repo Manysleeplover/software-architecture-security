@@ -1,4 +1,4 @@
-CREATE SCHEMA user_credential_liquibase AUTHORIZATION user_credential_db_user;
+CREATE SCHEMA user_credential_liquibase AUTHORIZATION user_;
 
 DROP TABLE if EXISTS users CASCADE;
 create table users
