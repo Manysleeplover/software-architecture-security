@@ -1,4 +1,4 @@
-package ru.romanov.electronic_signature.server
+package ru.romanov.electronic_signature.server.model
 
 data class SignRequest(
     val message: String

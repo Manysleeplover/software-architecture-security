@@ -1,9 +1,9 @@
 package ru.romanov.electronic_signature.server.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.romanov.electronic_signature.server.ServerMessageResponse
-import ru.romanov.electronic_signature.server.SignRequest
-import ru.romanov.electronic_signature.server.VerifyRequest
+import ru.romanov.electronic_signature.server.model.ServerMessageResponse
+import ru.romanov.electronic_signature.server.model.SignRequest
+import ru.romanov.electronic_signature.server.model.VerifyRequest
 import ru.romanov.electronic_signature.server.service.DigitalSignService
 
 

@@ -1,7 +1,7 @@
 package ru.romanov.electronic_signature.server.service
 
 import org.springframework.stereotype.Service
-import ru.romanov.electronic_signature.server.ServerMessageResponse
+import ru.romanov.electronic_signature.server.model.ServerMessageResponse
 import java.security.PrivateKey
 import java.security.PublicKey
 import java.security.Signature
@@ -35,10 +35,8 @@ class DigitalSignService(
 
 
     fun getRandomMessage(): ServerMessageResponse {
-
         val message = UUID.randomUUID().toString()
         val cipherMessage = Base64.getEncoder().encodeToString(signData(message))
-
         return ServerMessageResponse(message, cipherMessage)
     }
 
