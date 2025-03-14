@@ -1,6 +1,9 @@
-package ru.romanov.electronic_signature.server
+package ru.romanov.electronic_signature.server.controller
 
 import org.springframework.web.bind.annotation.*
+import ru.romanov.electronic_signature.server.ServerMessageResponse
+import ru.romanov.electronic_signature.server.SignRequest
+import ru.romanov.electronic_signature.server.VerifyRequest
 import ru.romanov.electronic_signature.server.service.DigitalSignService
 
 
@@ -11,6 +14,17 @@ import java.util.*
 class DigitalSignatureController(
     private val digitalSignService: DigitalSignService
 ) {
+
+    @GetMapping("/public-key")
+    fun getPublicKey(): Map<String, String> {
+        return mapOf("publicKey" to digitalSignService.getPublicKey())
+    }
+
+    @GetMapping("/random-message")
+    fun getRandomMessage(): ServerMessageResponse {
+        return digitalSignService.getRandomMessage()
+    }
+
     // Подписать данные
     @PostMapping("/sign")
     fun signData(@RequestBody request: SignRequest): Map<String, Any> {
