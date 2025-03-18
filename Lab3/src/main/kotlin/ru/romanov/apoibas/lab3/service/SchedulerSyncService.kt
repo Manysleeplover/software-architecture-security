@@ -13,7 +13,6 @@ class SchedulerSyncService(
 ) {
 
 
-    @Async
     @Scheduled(cron = "\${scheduler.exchange-rate.cron}")
     fun scheduleTaskUsingCronExpression() =
          cnbService.synchronizeByDate(LocalDate.now())

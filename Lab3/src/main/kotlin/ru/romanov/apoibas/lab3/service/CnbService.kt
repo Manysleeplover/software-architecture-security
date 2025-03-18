@@ -11,7 +11,6 @@ import ru.romanov.apoibas.lab3.util.CnbResponseMapper
 import ru.romanov.apoibas.lab3.util.formatDate
 import ru.romanov.apoibas.lab3.util.toEntity
 import java.time.LocalDate
-import java.util.*
 import java.util.stream.Collectors
 
 @Service
@@ -25,28 +24,22 @@ class CnbService(
         val responses = mutableListOf<DailyExchangeRateDTO>()
 
         for(targetDate in startDate.datesUntil(endDate)) {
-            cnbRestClient
-                .get()
-                .uri("daily.txt?date=${formatDate(targetDate)}")
-                .retrieve()
-                .body(String::class.java)?.let {
-                    responses.add(
-                        cnbResponseMapper.map(targetDate, it)
-                    )
-                }
+            responses.add(
+                synchronizeByDate(targetDate)
+            )
         }
         dailyExchangeRateRepository.saveAll(responses.toEntity())
     }
 
-    fun synchronizeByDate(targetDate: LocalDate) {
-        val entity = cnbRestClient.get()
+    fun synchronizeByDate(targetDate: LocalDate): DailyExchangeRateDTO {
+        val dto = cnbRestClient.get()
             .uri("daily.txt?date=${formatDate(targetDate)}")
             .retrieve()
             .body(String::class.java)?.let {
                 cnbResponseMapper.map(targetDate, it)
-            }!!.toEntity()
-
-        dailyExchangeRateRepository.save(entity)
+            }
+        dailyExchangeRateRepository.save(dto!!.toEntity())
+        return dto
     }
 
     fun buildReport(request: ReportRequestDTO): ReportResponseDTO {
@@ -55,7 +48,18 @@ class CnbService(
 
         val doubleSummaryStatistics = ratesList
             .stream()
-            .flatMap { it.rates.stream().filter { exchangeRate -> exchangeRate.code.equals(request.code) } }
+            .flatMap {
+                it
+                    .rates
+                    .stream()
+                    .filter {
+                        exchangeRate -> exchangeRate
+                            .code
+                            .equals(
+                                request.code
+                            )
+                    }
+            }
             .collect(Collectors.summarizingDouble { it.rate })
 
         return ReportResponseDTO(
