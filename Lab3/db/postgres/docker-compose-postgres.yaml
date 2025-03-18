@@ -1,0 +1,12 @@
+services:
+  exchange_rate_db:
+    image: postgres
+    container_name: exchange_rate_db
+    environment:
+      POSTGRES_DB: exchange_rate_db
+      POSTGRES_USER: exchange_rate_db_user
+      POSTGRES_PASSWORD: master
+    volumes:
+      - ./entrypoint:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
