@@ -6,24 +6,25 @@ import org.springframework.web.bind.annotation.RestController
 import ru.romanov.apoibas.lab3.model.dto.DateIntervalDTO
 import ru.romanov.apoibas.lab3.model.dto.ReportRequestDTO
 import ru.romanov.apoibas.lab3.model.dto.ReportResponseDTO
-import ru.romanov.apoibas.lab3.service.CnbService
-import java.util.*
+import ru.romanov.apoibas.lab3.service.ExchangeRateService
 
 
 @RestController
 class CnbController(
-    private val cnbService: CnbService,
+    private val exchangeRateService: ExchangeRateService,
 ) {
 
     @PostMapping("/sync/by-date-interval")
     fun synchronizeExchangeRateByDateInterval(
         @RequestBody request: DateIntervalDTO
     ){
-        cnbService.synchronizeExchangeRateByDateInterval(request.startDate, request.endDate)
+        exchangeRateService.synchronizeExchangeRateByDateInterval(request.startDate, request.endDate)
     }
 
     @PostMapping("report/by-date-interval")
-    fun reportExchangeRateByDateInterval(@RequestBody request: ReportRequestDTO): ReportResponseDTO {
-        return cnbService.buildReport(request)
+    fun reportExchangeRateByDateInterval(
+        @RequestBody request: ReportRequestDTO
+    ): ReportResponseDTO {
+        return exchangeRateService.buildReport(request)
     }
 }

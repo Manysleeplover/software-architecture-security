@@ -14,7 +14,7 @@ import java.time.LocalDate
 import java.util.stream.Collectors
 
 @Service
-class CnbService(
+class ExchangeRateService(
     private val cnbRestClient: RestClient,
     private val cnbResponseMapper: CnbResponseMapper,
     private val dailyExchangeRateRepository: DailyExchangeRateRepository
