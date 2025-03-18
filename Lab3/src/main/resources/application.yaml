@@ -15,4 +15,4 @@ spring:
 
 scheduler:
   exchange-rate:
-    cron: "0 08 21 * * *"
+    cron: "0 01 00 * * *"
