@@ -6,4 +6,6 @@ import java.time.LocalDate
 
 
 interface DailyExchangeRateRepository : JpaRepository<DailyExchangeRateEntity, LocalDate>{
+
+    fun findDailyExchangeRateEntityByDateBetween(from: LocalDate, to: LocalDate): List<DailyExchangeRateEntity>
 }
